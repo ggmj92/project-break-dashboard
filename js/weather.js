@@ -22,3 +22,59 @@
 // Usa promesas o ASYNC/AWAIT para crear la asincronía en las peticiopnes fetch
 // Piensa si necesitas solo un endpoint o varios. Revisa que trae cada petición.
 // Estructura bien tu código
+
+// Temperature: current > temp_c
+// Feels like: current > feelslike_c
+// Humidity: current > humidity
+// Wind: current > wind_kph
+// Image: current > condition > icon
+
+// Sunrise: forecast > 0 > astro > sunrise
+// Sunset: forecast > 0 > astro > sunset
+
+// City: location > name
+// Country: location > country
+
+const apiKey = "7317477b37ea40df8f8195024231312";
+const searchInput = document.querySelector(".weatherSearch input");
+const searchBtn = document.querySelector(".weatherSearch button");
+const city = "";
+const weatherIcon = document.querySelector(".weatherIcon");
+
+const fetchWeather = async () => {
+
+    const city = searchInput.value;
+
+    searchBtn.addEventListener("click", () => {
+        fetchWeather(searchInput.value);
+    });
+
+    searchInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            fetchWeather(searchInput.value)
+        }
+    });
+
+    try {
+        const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&aqi=no`);
+        
+        const data = await response.json();
+        // console.log(data);
+
+        document.querySelector(".city").innerHTML = data.location.name + ", " + data.location.country;
+        document.querySelector(".temp").innerHTML = Math.round(data.current.temp_c) + "ºC";
+        document.querySelector(".feel").innerHTML = "Feels like: " + Math.round(data.current.feelslike_c) + "ºC";
+        document.querySelector(".humidity").innerHTML = data.current.humidity + "%";
+        document.querySelector(".wind").innerHTML = data.current.wind_kph + "km/h";
+        weatherIcon.src = "https://" + data.current.condition.icon
+        console.log(data.current.condition.icon)
+        document.querySelector(".weather").style.display = "block"
+
+    } catch (error) {
+        // console.log(error);
+    }
+
+};
+
+fetchWeather()
+
