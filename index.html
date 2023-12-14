@@ -10,43 +10,72 @@
 
 <body>
 
-    <div class="clockCard">
-        <div id="clock"></div>
-    </div>
+    <header>
+        <h1><a href="">GGMJ's Widget App</a></h1>
+        <div class="navBar">
+            <div>
+                <a href="">Clock</a>
+                <a href="">Weather</a>
+                <a href="">Link Saver</a>
+                <a href="">Password Generator</a>
+            </div>
+        </div>
 
-    <div class="weatherCard">
-        <div class="weatherSearch">
-            <input type="text" placeholder="Enter city name" spellcheck="false">
-            <button><img src="./assets/img/searchIcon.png" alt="searchIcon"></button>
         </div>
-        <div class="error">
-            <p>City not found</p>
+    </header>
+
+    <div class="container">
+
+        <div class="clockCard">
+            <div class="clock">
+                <div class="time"></div>
+                <div class="date"></div>
+            </div>
+            <div class="text">
+                <p>||Hello, how are you this afternoon?</p>
+            </div>
         </div>
-        <div class="weather">
-            <img class="weatherIcon" src="" alt="">
-            <h1 class="temp">Temperature: 23°C</h1>
-            <h4 class="feel">Real Feel: 21°C</h4>
-            <h2 class="city">City: Miami</h2>
-            <div class="details">
-                <div class="col">
-                    <img src="./assets/img/humidity.png" alt="humidityIcon">
-                    <div>
-                        <p class="humidity">78%</p>
-                        <p>Humidity</p>
-                    </div>
+
+        <div class="weatherCard">
+            <div class="weatherSearch">
+                <input type="text" placeholder="Enter city name" spellcheck="false">
+                <button><img src="./assets/img/searchIcon.png" alt="searchIcon"></button>
+            </div>
+            <div class="error">
+                <p>City not found</p>
+            </div>
+            <div class="weather">
+                <img class="weatherIcon" src="" alt="">
+                <h1 class="temp">Temperature: 23°C</h1>
+                <h4 class="feel">Real Feel: 21°C</h4>
+                <h2 class="city">City: Miami</h2>
+                <div class="details">
                     <div class="col">
-                        <img src="./assets/img/wind.png" alt="windIcon">
+                        <img src="./assets/img/humidity.png" alt="humidityIcon">
                         <div>
-                            <p class="wind">25km/h</p>
-                            <p>Wind Speed</p>
+                            <p class="humidity">78%</p>
+                            <p>Humidity</p>
+                        </div>
+                        <div class="col">
+                            <img src="./assets/img/wind.png" alt="windIcon">
+                            <div>
+                                <p class="wind">25km/h</p>
+                                <p>Wind Speed</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="linkCard"></div>
+        <div class="passwordCard"></div>
 
-        <script src="./js/weather.js"></script>
+    </div>
+
+
+    <script src="./js/weather.js"></script>
+
 </body>
 
 </html>

@@ -23,6 +23,104 @@
 // Piensa si necesitas solo un endpoint o varios. Revisa que trae cada petición.
 // Estructura bien tu código
 
+//CLOCK WIDGET
+
+const currentTime = () => {
+    let date = new Date();
+    let hours = date.getHours();
+    let mins = date.getMinutes();
+    let secs = date.getSeconds();
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    mins = (mins < 10) ? "0" + mins : mins;
+    secs = (secs < 10) ? "0" + secs : secs;
+
+    let hour = `${hours}:${mins}:${secs}`;
+
+    document.getElementsByClassName("time")[0].innerHTML = hour;
+    let clock = setTimeout(function () { currentTime() }, 1000);
+}
+currentTime();
+
+const currentDate = () => {
+    let date = new Date();
+    let day = date.getUTCDate();
+    let month = date.getUTCMonth() + 1;
+    let year = date.getUTCFullYear();
+
+    let today = `${day}/${month}/${year}`
+
+    document.getElementsByClassName("date")[0].innerHTML = today;
+
+}
+
+currentDate()
+
+const text = document.querySelector('.text p');
+text.innerHTML = text.innerText.split("").map(
+    (char, i) => 
+`<span style="transform:rotate(${i * 10}deg)">${char}</span>`
+    
+).join("")
+
+// const updateText = () => {
+//     let string = "";
+//     const text = document.getElementsByClassName("text")[0];
+
+//     const timeRanges = {
+//         rest: ["00:01", "07:00"],
+//         morning: ["07:01", "12:00"],
+//         lunch: ["12:01", "14:00"],
+//         afternoon: ["14:01", "16:00"],
+//         push: ["16:01", "18:00"],
+//         overtime: ["18:01", "22:00"],
+//         night: ["22:01", "00:00"],
+//     };
+
+//     window.onload = () => {
+//         for (const range of Object.values(timeRanges)) {
+//             if (hour >= range[0] && hour < range[1]) {
+//                 string = message(range);
+//                 break
+//             }
+//         }
+
+//         if (!string) {
+//             string = "Have a good night. Hope you get some rest!"
+//         }
+
+//         text.innerHTML = "";
+//         for (let i = 0; i < string.length; i++) {
+//             const span = document.createElement("span");
+//             span.innerHTML = string[i];
+//             text.appendChild(span);
+//             span.style.transform = `rotate(${11 * i}deg)`
+//         }
+//     }
+// };
+
+// const messageForRange = (range) => {
+//     switch (range[0]) {
+//         case "00:01":
+//             return "It's time to rest. Shut off and continue tomorrow!";
+//         case "07:01":
+//             return "Good morning, have a big breakfast and hit the code!"
+//         case "12:01":
+//             return "Work a bit longer, but don't forget to eat!"
+//         case "14:01":
+//             return "Hope you had a nice lunch!"
+//         case "16:01":
+//             return "Good afternoon. Give it one last push!"
+//         case "18:01":
+//             return "This is overtime. Consider stopping soon."
+//         default:
+//             return "";
+//     }
+// };
+
+
+//WEATHER WIDGET
+
 // Temperature: current > temp_c
 // Feels like: current > feelslike_c
 // Humidity: current > humidity
@@ -57,7 +155,7 @@ const fetchWeather = async () => {
 
     try {
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&aqi=no`);
-        
+
         const data = await response.json();
         // console.log(data);
 

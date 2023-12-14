@@ -53,13 +53,149 @@ table {
 	background: darkblue;
 } */
 
+/* WHOLE PAGE */
+
+header {
+	overflow: hidden;
+	background-color: #f1f1f1;
+	padding: 20px 10px;
+}
+
+header a {
+	float: left;
+	color: black;
+	text-align: center;
+	padding: 12px;
+	text-decoration: none;
+	font-size: 18px;
+	line-height: 25px;
+	border-radius: 4px;
+}
+
+header a:hover {
+	background-color: lightpink;
+	color: darkblue;
+}
+
+header a.active {
+	background-color: dodgerblue;
+	color: white;
+}
+
+.navBar {
+	float: right;
+}
+
+.navBar a {
+	color: rgb(185, 92, 108);
+}
+
+h1 a {
+	font-size: 28px;
+	color: darkblue;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: stretch;
+	gap: 200px;
+	margin: 20px;
+	padding: 100px;
+}
+
+/* CLOCK WIDGET */
+.clockCard {
+	display: flex;
+	flex-wrap: wrap;
+	color: blue;
+	background-color: rgb(32, 218, 172);
+	width: 400px;
+	height: 400px;
+	border-radius: 300px;
+	border: solid 6px rgb(255, 0, 34);
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	position: relative;
+}
+
+.clock {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	color: blue;
+	background-color: goldenrod;
+	width: 300px;
+	height: 300px;
+	border-radius: 300px;
+	border: solid 6px blue;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	font-size: 3rem;
+} 
+
+.text {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	animation: rotateText 60s linear infinite;
+}
+
+@keyframes rotateText {
+	0% {
+		transform: rotate(0deg);
+	}
+	100%{
+		transform: rotate(360deg);
+	}
+}
+
+.text span {
+	position: absolute;
+	left: 50%;
+	font-size: 2rem;
+	transform-origin: 0 200px;
+}
+
+span {
+	position: absolute;
+	left: 50%;
+	transform-origin: 0 150pc;
+	font-size: 20px;
+	font-weight: 500;
+	text-transform: lowercase;
+	color: white;
+}
+
+
+/* @keyframes rotate {
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+} */
+
+/* WEATHER WIDGET */
+
 .weatherCard {
-	width: 90%;
+	display: block;
+	flex-grow: 0;
+	flex-shrink: 1;
+	flex-basis: auto;
+	align-self: auto;
+	order: 0;
+	width: 50%;
 	max-width: 500px;
 	background-color: grey;
 	border: 5px solid pink;
 	color: #fff;
-	margin: 100px auto 0;
 	border-radius: 20px;
 	padding: 40px 35px;
 	text-align: center;
