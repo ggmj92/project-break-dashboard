@@ -11,13 +11,13 @@
 <body>
 
     <header>
-        <h1><a href="">GGMJ's Widget App</a></h1>
+        <h1><a href="#home">GGMJ's Widget App</a></h1>
         <div class="navBar">
             <div>
-                <a href="">Clock</a>
-                <a href="">Weather</a>
-                <a href="">Link Saver</a>
-                <a href="">Password Generator</a>
+                <a href="#clock">Clock</a>
+                <a href="#weather">Weather</a>
+                <a href="#links">Link Saver</a>
+                <a href="#password">Password Generator</a>
             </div>
         </div>
 
@@ -26,15 +26,17 @@
 
     <div class="container">
 
-        <div class="clockCard">
-            <div class="clock">
-                <div class="time"></div>
-                <div class="date"></div>
+        <a id="clock">
+            <div class="clockCard">
+                <div class="clock">
+                    <div class="time"></div>
+                    <div class="date"></div>
+                </div>
+                <div class="text">
+                    <p></p>
+                </div>
             </div>
-            <div class="text">
-                <p>||Hello, how are you this afternoon?</p>
-            </div>
-        </div>
+        </a>
 
         <div class="weatherCard">
             <div class="weatherSearch">
@@ -46,14 +48,14 @@
             </div>
             <div class="weather">
                 <img class="weatherIcon" src="" alt="">
-                <h1 class="temp">Temperature: 23°C</h1>
-                <h4 class="feel">Real Feel: 21°C</h4>
-                <h2 class="city">City: Miami</h2>
+                <h1 class="temp"></h1>
+                <h4 class="feel"></h4>
+                <h2 class="city"></h2>
                 <div class="details">
                     <div class="col">
                         <img src="./assets/img/humidity.png" alt="humidityIcon">
                         <div>
-                            <p class="humidity">78%</p>
+                            <p class="humidity"></p>
                             <p>Humidity</p>
                         </div>
                         <div class="col">
@@ -65,14 +67,45 @@
                         </div>
                     </div>
                 </div>
+                <div class="hourlyWeather"></div>
             </div>
         </div>
 
-        <div class="linkCard"></div>
-        <div class="passwordCard"></div>
+        <div class="linkCard">
+            <h2>Favorite Links</h2>
+            <div class="link-items">
+                <div class="link-inputs">
+                    <input type="text" id="link-title" placeholder="Enter link title">
+                    <input type="url" id="link-url" placeholder="Paste link address">
+                </div>
+                <div class="link-button">
+                    <button id="add-link-btn">Add Link</button>
+                </div>
+            </div>
+            <ul id="link-list"></ul>
+        </div>
+
+        <div class="passwordCard">
+            <h2>Password Generator</h2>
+            <div class="password-items">
+                <div class="password-number">
+                    <p>Number of characters: </p>
+                    <input type="number" id="passwordLength" min="12" max="50" value="12">
+                </div>
+                <div class="password-button">
+                    <button id="generateBtn">Generate Password</button>
+                </div>
+                <div class="passwords">
+                    <input type="text" id="password" readonly>
+                </div>
+            </div>
+        </div>
 
     </div>
 
+    <footer>
+        <p>Gabriel Garcia-Miro | Miami, FL | December 2023</p>
+    </footer>
 
     <script src="./js/weather.js"></script>
 

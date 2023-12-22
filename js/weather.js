@@ -1,28 +1,3 @@
-// Estación meteorológica:
-// ¿Como funciona?
-// Crea una página que tendrá lo siguiente:
-
-// El tiempo en el momento en el que accedemos a la página con varios elementos:
-// Ciudad y Pais. Pondremos la ciudad y País en el que nos encontramos.
-// El estado del clima.
-// Imagen y grados celsius de nuestra ciudad.
-// Precipitaciones, humedad y viento km/h.
-// La previsión por horas en el día en el que estamos. Con su hora, imagen y grados celsius.
-// Dale estilo con CSS.
-// ¿Qué usaremos?
-// API del tiempo de https://www.weatherapi.com/
-// Necesitarás una API KEY. Podrás conseguirla entrando en la url de weatherapi y pulsando en signup. Rellena los datos que pide y nada más entrar os aparecerá esa API KEY.
-// Puedes probar que funciona en esta página: https://www.weatherapi.com/api-explorer.aspx metiendo la APIKEY y dándole al botón de show response
-// Aquí está la documentación completa https://www.weatherapi.com/docs/
-// Este es el base URL al que tendréis que acceder http://api.weatherapi.com/v1 añadiremos detrás lo que necesitemos.
-// Este es un ejemplo de endpoint con la APIKEY y la ciudad. Solo habría que cambiar los datos de ${apiKey} por la nuestra y ${ciudad} por la elegida por nosotros https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&aqi=no
-// fetch para hacer peticiones a la API.
-// PISTAS Y CONSEJOS
-// La URL base es http cámbiala desde el inicio por https para no tener problemas en el futuro de bloqueos de seguridad.
-// Usa promesas o ASYNC/AWAIT para crear la asincronía en las peticiopnes fetch
-// Piensa si necesitas solo un endpoint o varios. Revisa que trae cada petición.
-// Estructura bien tu código
-
 //CLOCK WIDGET
 
 const currentTime = () => {
@@ -39,8 +14,9 @@ const currentTime = () => {
 
     document.getElementsByClassName("time")[0].innerHTML = hour;
     let clock = setTimeout(function () { currentTime() }, 1000);
+
+    updateText(hour);
 }
-currentTime();
 
 const currentDate = () => {
     let date = new Date();
@@ -54,69 +30,60 @@ const currentDate = () => {
 
 }
 
-currentDate()
+const updateText = (hour) => {
+    let string = "";
+    const text = document.querySelector(".text p");
 
-const text = document.querySelector('.text p');
-text.innerHTML = text.innerText.split("").map(
-    (char, i) => 
-`<span style="transform:rotate(${i * 10}deg)">${char}</span>`
-    
-).join("")
+    const timeRanges = {
+        rest: ["00:01", "07:00"],
+        morning: ["07:01", "12:00"],
+        lunch: ["12:01", "14:00"],
+        afternoon: ["14:01", "16:00"],
+        push: ["16:01", "18:00"],
+        overtime: ["18:01", "22:00"],
+        night: ["22:01", "00:00"]
+    };
 
-// const updateText = () => {
-//     let string = "";
-//     const text = document.getElementsByClassName("text")[0];
+    for (const range of Object.values(timeRanges)) {
+        if (hour >= range[0] && hour < range[1]) {
+            string = messageForRange(range);
+        }
+    }
 
-//     const timeRanges = {
-//         rest: ["00:01", "07:00"],
-//         morning: ["07:01", "12:00"],
-//         lunch: ["12:01", "14:00"],
-//         afternoon: ["14:01", "16:00"],
-//         push: ["16:01", "18:00"],
-//         overtime: ["18:01", "22:00"],
-//         night: ["22:01", "00:00"],
-//     };
+    if (!string) {
+        string = "| Have a good night! |"
+    }
 
-//     window.onload = () => {
-//         for (const range of Object.values(timeRanges)) {
-//             if (hour >= range[0] && hour < range[1]) {
-//                 string = message(range);
-//                 break
-//             }
-//         }
+    text.innerHTML = string.split("").map(
+        (char, i) =>
+            `<span style="transform:rotate(${i * 10}deg)">${char}</span>`
 
-//         if (!string) {
-//             string = "Have a good night. Hope you get some rest!"
-//         }
+    ).join("")
+};
 
-//         text.innerHTML = "";
-//         for (let i = 0; i < string.length; i++) {
-//             const span = document.createElement("span");
-//             span.innerHTML = string[i];
-//             text.appendChild(span);
-//             span.style.transform = `rotate(${11 * i}deg)`
-//         }
-//     }
-// };
+const messageForRange = (range) => {
+    switch (range[0]) {
+        case "00:01":
+            return "| Shut off and continue tomorrow! |";
+        case "07:01":
+            return "| Good morning! |"
+        case "12:01":
+            return "| Don't forget to eat! |"
+        case "14:01":
+            return "| Hope you had a nice lunch! |"
+        case "16:01":
+            return "| Good afternoon! |"
+        case "18:01":
+            return "| Consider stopping soon! |"
+        case "22:01":
+            return "| Goodnight, get some rest! |"
+        default:
+            return "";
+    }
+};
 
-// const messageForRange = (range) => {
-//     switch (range[0]) {
-//         case "00:01":
-//             return "It's time to rest. Shut off and continue tomorrow!";
-//         case "07:01":
-//             return "Good morning, have a big breakfast and hit the code!"
-//         case "12:01":
-//             return "Work a bit longer, but don't forget to eat!"
-//         case "14:01":
-//             return "Hope you had a nice lunch!"
-//         case "16:01":
-//             return "Good afternoon. Give it one last push!"
-//         case "18:01":
-//             return "This is overtime. Consider stopping soon."
-//         default:
-//             return "";
-//     }
-// };
+currentTime();
+currentDate();
 
 
 //WEATHER WIDGET
@@ -141,15 +108,22 @@ const weatherIcon = document.querySelector(".weatherIcon");
 
 const fetchWeather = async () => {
 
-    const city = searchInput.value;
+    let city = localStorage.getItem("city");
+    if (!city) {
+        city = searchInput.value;
+    }
 
     searchBtn.addEventListener("click", () => {
-        fetchWeather(searchInput.value);
+        city = searchInput.value;
+        localStorage.setItem("city", city);
+        fetchWeather();
     });
 
     searchInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
-            fetchWeather(searchInput.value)
+            city = searchInput.value;
+            localStorage.setItem("city", city);
+            fetchWeather();
         }
     });
 
@@ -157,22 +131,198 @@ const fetchWeather = async () => {
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&aqi=no`);
 
         const data = await response.json();
-        // console.log(data);
 
         document.querySelector(".city").innerHTML = data.location.name + ", " + data.location.country;
         document.querySelector(".temp").innerHTML = Math.round(data.current.temp_c) + "ºC";
         document.querySelector(".feel").innerHTML = "Feels like: " + Math.round(data.current.feelslike_c) + "ºC";
         document.querySelector(".humidity").innerHTML = data.current.humidity + "%";
         document.querySelector(".wind").innerHTML = data.current.wind_kph + "km/h";
-        weatherIcon.src = "https://" + data.current.condition.icon
-        console.log(data.current.condition.icon)
-        document.querySelector(".weather").style.display = "block"
+        weatherIcon.src = "https://" + data.current.condition.icon;
+
+        const hourlyWeather = document.querySelector(".hourlyWeather");
+        hourlyWeather.innerHTML = "";
+        let counter = [0];
+        data.forecast.forecastday[0].hour.forEach(hourData => {
+            if (counter < 6) {
+                const hourElement = document.createElement("div");
+                const time = hourData.time.split(" ")[1];
+
+                hourElement.innerHTML = `
+            <h3>${time}</h3>
+            <p>${Math.round(hourData.temp_c)}ºC</p>
+            <img src="https://${hourData.condition.icon}" alt="${hourData.condition.text}">
+            `;
+                hourlyWeather.appendChild(hourElement);
+                counter++;
+            }
+        });
+
+        document.querySelector(".weather").style.display = "block";
 
     } catch (error) {
-        // console.log(error);
     }
 
 };
 
-fetchWeather()
+fetchWeather();
 
+//FAVORITE LINKS WIDGET
+
+const linkList = document.getElementById("link-list");
+const addLinkBtn = document.getElementById("add-link-btn");
+const linkTitle = document.getElementById("link-title");
+const linkUrl = document.getElementById("link-url");
+
+const addLink = (title, url) => {
+    const listItem = document.createElement("li");
+    listItem.classList.add("link-item");
+
+    // if (!url.startsWith("http")) {
+    //     url = "https://www." + url;
+    // }
+
+        const linkElement = document.createElement("a");
+        linkElement.href = url;
+        linkElement.textContent = title;
+        listItem.appendChild(linkElement);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "X";
+        deleteBtn.addEventListener("click", () => {
+            linkList.removeChild(listItem);
+            updateLocalStorage();
+        });
+        listItem.appendChild(deleteBtn);
+
+        linkList.appendChild(listItem)
+        updateLocalStorage();
+}
+
+addLinkBtn.addEventListener('click', () => {
+    const title = linkTitle.value.trim();
+    const url = linkUrl.value.trim();
+
+    if (!title || !url) {
+        alert('Please enter both title and url');
+        return
+    }
+
+    try {
+        new URL(url);
+    } catch (_) {
+        alert('Please enter a valid url');
+        return
+    }
+
+    addLink(title, url);
+
+    linkTitle.value = "";
+    linkUrl.value = "";
+});
+
+
+const getLinksFromLocalStorage = () => {
+    try {
+        return JSON.parse(localStorage.getItem("favoriteLinks") || "[]");
+    } catch (error) {
+        console.error("Error reading from localStorage", error);
+        return [];
+    }
+}
+
+
+const updateLocalStorage = () => {
+    const links = [];
+    for (const item of linkList.querySelectorAll("li")) {
+        links.push({
+            title: item.querySelector("a").textContent,
+            url: item.querySelector("a").href
+        })
+    }
+    try {
+        localStorage.setItem("favoriteLinks", JSON.stringify(links))
+    } catch (error) {
+        console.error("Error writing to localStorage", error)
+    }
+
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    getLinksFromLocalStorage().forEach((link) => addLink(link.title, link.url))
+})
+
+
+//BACKGROUND IMAGES
+
+const images = [
+    './assets/img/1.jpg',
+    './assets/img/2.jpg',
+    './assets/img/3.jpg',
+    './assets/img/4.jpg',
+    './assets/img/5.jpg',
+    './assets/img/6.jpg',
+    './assets/img/7.jpg',
+    './assets/img/8.jpg',
+    './assets/img/9.jpg',
+    './assets/img/10.jpg'
+];
+
+const changeBackgroundImage = () => {
+    const randomImage = Math.floor(Math.random() * images.length);
+    const imageUrl = images[randomImage];
+    document.body.style.backgroundImage = `url('${imageUrl}')`;
+}
+
+setInterval(changeBackgroundImage, 15000);
+
+changeBackgroundImage();
+
+
+//PASSWORD GENERATOR WIDGET
+
+document.getElementById('generateBtn').addEventListener('click', () => {
+    const length = document.getElementById('passwordLength').value;
+    let result = "";
+    const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const lowercase = "abcdefghijklmnopqrstuvwxyz";
+    const numbers = "0123456789";
+    const symbols = "!@#$%^&*()-_=+";
+    const allCharacters = uppercase + lowercase + numbers + symbols;
+
+    result += uppercase[Math.floor(Math.random() * uppercase.length)];
+    result += lowercase[Math.floor(Math.random() * lowercase.length)];
+    result += numbers[Math.floor(Math.random() * numbers.length)];
+    result += symbols[Math.floor(Math.random() * symbols.length)];
+
+    for (let i = 4; i < length; i++) {
+        result += allCharacters[Math.floor(Math.random() * allCharacters.length)];
+    }
+
+    result = result.split('').sort(() => Math.random() - 0.5).join('');
+
+    document.getElementById("password").value = result;
+});
+
+
+//NAVBAR
+
+// const navLinks = document.querySelectorAll('navBar a');
+// navLinks.forEach(link => {
+//     link.addEventListener('click', (event) => {
+//         event.preventDefault();
+
+//         const targetId = link.href.slice(1);
+
+//         const targetElement = document.querySelector(targetId);
+//         if (targetElement) {
+//             targetElement.scrollIntoView( {behavior: 'smooth'} )
+//         }
+//     });
+// });
+
+// const widgets = document.querySelectorAll('.widgetCard');
+// widgets.forEach(widget => widget.style.display = 'none');
+
+// const widgetToShow = document.querySelector(`#${targetId} + .widgetCard`);
+// widgets.forEach(widget => widget.style.display = 'none');
+// widgetToShow.style.display = 'block';

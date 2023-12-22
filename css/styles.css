@@ -30,6 +30,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 ol, ul {
 	list-style: none;
@@ -49,16 +52,14 @@ table {
 
 /* ----- */
 
-/* body {
-	background: darkblue;
-} */
 
 /* WHOLE PAGE */
 
 header {
 	overflow: hidden;
-	background-color: #f1f1f1;
+	background-color: #007BFF;
 	padding: 20px 10px;
+	border: 2px solid darkblue;
 }
 
 header a {
@@ -73,8 +74,8 @@ header a {
 }
 
 header a:hover {
-	background-color: lightpink;
-	color: darkblue;
+	background-color: darkblue;
+	color: lightpink;
 }
 
 header a.active {
@@ -86,8 +87,9 @@ header a.active {
 	float: right;
 }
 
-.navBar a {
-	color: rgb(185, 92, 108);
+.navBar a.active {
+	background-color: darkblue;
+	color: lightpink;
 }
 
 h1 a {
@@ -95,28 +97,61 @@ h1 a {
 	color: darkblue;
 }
 
+h2 {
+	font-size: 18px;
+	color: darkblue;
+	text-align: center;
+	padding: 10px;
+}
+
 .container {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 	align-content: stretch;
-	gap: 200px;
+	gap: 100px;
 	margin: 20px;
-	padding: 100px;
+	padding: 40px;
+}
+
+.clockCard, .weatherCard, .linkCard, .passwordCard {
+	border: 6px solid darkblue;
+}
+
+.weatherCard, .linkCard, .passwordCard {
+	height: auto;
+	width: 420px;
+	padding: 20px;
+	border-radius: 40px;
+	background-color: #007BFF;
+}
+
+footer {
+	overflow: hidden;
+	background-color: #007BFF;
+	padding: 20px 10px;
+	border: 2px solid darkblue;
+}
+
+footer p {
+	float: right;
+	color: black;
+	text-align: center;
+	padding: 5px;
+	font-size: 12px;
 }
 
 /* CLOCK WIDGET */
 .clockCard {
 	display: flex;
 	flex-wrap: wrap;
-	color: blue;
-	background-color: rgb(32, 218, 172);
-	width: 400px;
 	height: 400px;
+	width: 400px;
+	color: blue;
+	background-color: pink;
 	border-radius: 300px;
-	border: solid 6px rgb(255, 0, 34);
 	justify-content: center;
 	align-items: center;
 	align-content: center;
@@ -132,7 +167,7 @@ h1 a {
 	width: 300px;
 	height: 300px;
 	border-radius: 300px;
-	border: solid 6px blue;
+	border: 6px solid darkblue;
 	justify-content: center;
 	align-items: center;
 	align-content: center;
@@ -144,6 +179,8 @@ h1 a {
 	width: 100%;
 	height: 100%;
 	animation: rotateText 60s linear infinite;
+	white-space: no-wrap;
+	letter-spacing: 1px;
 }
 
 @keyframes rotateText {
@@ -168,19 +205,9 @@ span {
 	transform-origin: 0 150pc;
 	font-size: 20px;
 	font-weight: 500;
-	text-transform: lowercase;
+	text-transform: uppercase;
 	color: white;
 }
-
-
-/* @keyframes rotate {
-    100% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-} */
 
 /* WEATHER WIDGET */
 
@@ -191,13 +218,8 @@ span {
 	flex-basis: auto;
 	align-self: auto;
 	order: 0;
-	width: 50%;
 	max-width: 500px;
-	background-color: grey;
-	border: 5px solid pink;
 	color: #fff;
-	border-radius: 20px;
-	padding: 40px 35px;
 	text-align: center;
 };
 
@@ -215,7 +237,7 @@ span {
 	color: #555;
 	padding: 10px 25px;
 	height: 30px;
-	width: 300px;
+	width: 200px;
 	border-radius: 30px;
 	flex: 1;
 	margin-right: 16px;
@@ -252,7 +274,7 @@ span {
 }
 
 .weather h2 {
-	font-size: 35px;
+	font-size: 28px;
 	font-weight: 400;
 	margin-top: 10px;
 }
@@ -296,6 +318,19 @@ span {
 	display: none;
 }
 
+.hourlyWeather {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	padding: 10px;
+	align-content: center;
+	justify-content: space-between;
+}
+
+.hourlyWeather img {
+	width: 50px;
+}
+
 .error {
 	text-align: left;
 	margin-left: 10px;
@@ -304,4 +339,154 @@ span {
 	display: none;
 }
 
+/* LINKS WIDGET */
 
+.linkCard {
+	display: block;
+	flex-grow: 0;
+	flex-shrink: 1;
+	flex-basis: auto;
+	align-self: auto;
+	order: 0;
+	max-width: 500px;
+	color: #fff;
+	text-align: center;
+
+}
+
+.link-items {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-content: center;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 10px;
+	gap: 10px;
+}
+
+#link-list {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	gap: 10px;
+	margin-left: 20px;
+  }
+
+  #link-list button {
+	border: 0;
+	outline: 0;
+	background: #ebfffc;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	align-self: center;
+	margin-right: 20px;
+  }
+
+.link-items input {
+	border: 0;
+	outline: 0;
+	background: #ebfffc;
+	color: #555;
+	padding: 10px 25px;
+	height: 30px;
+	width: auto;
+	border-radius: 30px;
+	margin-right: 16px;
+	margin: 10px;
+	font-size: 18px;
+	margin-left: 10px;
+}
+
+.link-items button {
+	border: 0;
+	outline: 0;
+	background: #ebfffc;
+	border-radius: 50%;
+	width: 80px;
+	height: 80px;
+	cursor: pointer;
+	align-self: center;
+	margin-right: 20px;
+} 
+
+/* PASSWORD WIDGET */
+/* .passwordCard {
+} */
+
+.passwordCard {
+	display: block;
+	flex-grow: 0;
+	flex-shrink: 1;
+	flex-basis: auto;
+	align-self: auto;
+	order: 0;
+	max-width: 500px;
+	color: #fff;
+	text-align: center;
+
+}
+
+.password-items {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 10px;
+	align-content: center;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+.password-number {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+}
+
+.password-number input{
+	border: 0;
+	outline: 0;
+	background: #ebfffc;
+	color: #555;
+	height: 80px;
+	width: 80px;
+	border-radius: 50px;
+	margin-right: 16px;
+	text-align: center;
+	font-size: 18px;
+}
+
+.password-items button {
+	border: 0;
+	outline: 0;
+	background: #ebfffc;
+	border-radius: 50%;
+	width: 80px;
+	height: 80px;
+	cursor: pointer;
+	align-self: center;
+} 
+
+.password-items .passwords input {
+	border: 0;
+	outline: 0;
+	background: #ebfffc;
+	color: #555;
+	padding: 10px 25px;
+	height: 30px;
+	width: 300px;
+	border-radius: 30px;
+	font-size: 18px;
+	margin-top: 20px;
+}
+
+#generateBtn:hover {
+	background-color: #0056b3;
+}
