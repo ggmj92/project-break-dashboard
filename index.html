@@ -11,13 +11,13 @@
 <body>
 
     <header>
-        <h1><a href="#home">GGMJ's Widget App</a></h1>
+        <h1><a href="index.html">GGMJ's Widget App</a></h1>
         <div class="navBar">
             <div>
-                <a href="#clock">Clock</a>
-                <a href="#weather">Weather</a>
-                <a href="#links">Link Saver</a>
-                <a href="#password">Password Generator</a>
+                <a href="clock.html" data-widget="clockWidget">Clock</a>
+                <a href="weather.html" data-widget="=weatherWidget">Weather</a>
+                <a href="links.html" data-widget="linkWidget">Link Saver</a>
+                <a href="passwords.html" data-widget="passwordWidget">Password Generator</a>
             </div>
         </div>
 
@@ -26,8 +26,7 @@
 
     <div class="container">
 
-        <a id="clock">
-            <div class="clockCard">
+            <div class="clockCard" id="clockWidget">
                 <div class="clock">
                     <div class="time"></div>
                     <div class="date"></div>
@@ -36,9 +35,8 @@
                     <p></p>
                 </div>
             </div>
-        </a>
 
-        <div class="weatherCard">
+        <div class="weatherCard" id="weatherWidget">
             <div class="weatherSearch">
                 <input type="text" placeholder="Enter city name" spellcheck="false">
                 <button><img src="./assets/img/searchIcon.png" alt="searchIcon"></button>
@@ -71,7 +69,7 @@
             </div>
         </div>
 
-        <div class="linkCard">
+        <div class="linkCard" id="linkWidget">
             <h2>Favorite Links</h2>
             <div class="link-items">
                 <div class="link-inputs">
@@ -85,7 +83,7 @@
             <ul id="link-list"></ul>
         </div>
 
-        <div class="passwordCard">
+        <div class="passwordCard" id="passwordWidget">
             <h2>Password Generator</h2>
             <div class="password-items">
                 <div class="password-number">
@@ -107,7 +105,7 @@
         <p>Gabriel Garcia-Miro | Miami, FL | December 2023</p>
     </footer>
 
-    <script src="./js/weather.js"></script>
+    <script src="./js/widgets.js"></script>
 
 </body>
 

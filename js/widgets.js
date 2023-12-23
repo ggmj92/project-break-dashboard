@@ -1,3 +1,21 @@
+// //NAV BAR
+
+// const navLinks = document.querySelectorAll(".navBar a");
+
+// navLinks.forEach(link => {
+//     link.addEventListener('click', function (event) {
+//         event.preventDefault();
+
+//         const widgets = document.document.querySelectorAll('.widget');
+//         widgets.forEach(widget => {
+//             widget.style.display = "none";
+//         });
+
+//         const widgetId = link.getAttribute("data-widget");
+//         document.querySelector("#" + widgetId).style.display = "block";
+//     });
+// });
+
 //CLOCK WIDGET
 
 const currentTime = () => {
@@ -141,6 +159,7 @@ const fetchWeather = async () => {
 
         const hourlyWeather = document.querySelector(".hourlyWeather");
         hourlyWeather.innerHTML = "";
+
         let counter = [0];
         data.forecast.forecastday[0].hour.forEach(hourData => {
             if (counter < 6) {
@@ -181,21 +200,21 @@ const addLink = (title, url) => {
     //     url = "https://www." + url;
     // }
 
-        const linkElement = document.createElement("a");
-        linkElement.href = url;
-        linkElement.textContent = title;
-        listItem.appendChild(linkElement);
+    const linkElement = document.createElement("a");
+    linkElement.href = url;
+    linkElement.textContent = title;
+    listItem.appendChild(linkElement);
 
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "X";
-        deleteBtn.addEventListener("click", () => {
-            linkList.removeChild(listItem);
-            updateLocalStorage();
-        });
-        listItem.appendChild(deleteBtn);
-
-        linkList.appendChild(listItem)
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "X";
+    deleteBtn.addEventListener("click", () => {
+        linkList.removeChild(listItem);
         updateLocalStorage();
+    });
+    listItem.appendChild(deleteBtn);
+
+    linkList.appendChild(listItem)
+    updateLocalStorage();
 }
 
 addLinkBtn.addEventListener('click', () => {
@@ -303,26 +322,3 @@ document.getElementById('generateBtn').addEventListener('click', () => {
     document.getElementById("password").value = result;
 });
 
-
-//NAVBAR
-
-// const navLinks = document.querySelectorAll('navBar a');
-// navLinks.forEach(link => {
-//     link.addEventListener('click', (event) => {
-//         event.preventDefault();
-
-//         const targetId = link.href.slice(1);
-
-//         const targetElement = document.querySelector(targetId);
-//         if (targetElement) {
-//             targetElement.scrollIntoView( {behavior: 'smooth'} )
-//         }
-//     });
-// });
-
-// const widgets = document.querySelectorAll('.widgetCard');
-// widgets.forEach(widget => widget.style.display = 'none');
-
-// const widgetToShow = document.querySelector(`#${targetId} + .widgetCard`);
-// widgets.forEach(widget => widget.style.display = 'none');
-// widgetToShow.style.display = 'block';
